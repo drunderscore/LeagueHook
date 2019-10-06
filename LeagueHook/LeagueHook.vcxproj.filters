@@ -183,9 +183,6 @@
     <ClInclude Include="Packet.h">
       <Filter>SDK\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>SDK\Classes</Filter>
-    </ClInclude>
     <ClInclude Include="ImGuiRender.h">
       <Filter>UI</Filter>
     </ClInclude>

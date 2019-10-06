@@ -103,7 +103,6 @@
     <ClCompile Include="WinApi.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h" />
     <ClInclude Include="DebugOverlay.h" />
     <ClInclude Include="DeviceHandler.h" />
     <ClInclude Include="FNV-1A.h" />
