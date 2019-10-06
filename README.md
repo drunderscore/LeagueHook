@@ -3,4 +3,7 @@
 
 - i will update this over time if i feel like it
 
-![Preview](https://i.imgur.com/qVJi3nO.png)
+## James' modifications
+This is for me, so don't go complaining about anything in here.
+
+And yes, my code style is different. The entire base is reformatted.
