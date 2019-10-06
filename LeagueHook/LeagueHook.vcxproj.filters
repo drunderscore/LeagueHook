@@ -44,6 +44,18 @@
     <ClCompile Include="WinApi.cpp">
       <Filter>WinApi</Filter>
     </ClCompile>
+    <ClCompile Include="ImGuiRender.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="NetworkDebug.cpp">
+      <Filter>NetworkDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketHandler.cpp">
+      <Filter>NetworkDebug</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugOverlay.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Logger">
@@ -90,6 +102,12 @@
     </Filter>
     <Filter Include="SDK\Classes">
       <UniqueIdentifier>{6780bc71-8d56-42c3-a2ef-90be19f37cba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetworkDebug">
+      <UniqueIdentifier>{9d72f772-4cf1-4372-b006-c994d15e17ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{a4413b7f-138f-4513-a7b6-b68959863dd5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +179,24 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>SDK\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet.h">
+      <Filter>SDK\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>SDK\Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGuiRender.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="NetworkDebug.h">
+      <Filter>NetworkDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketHandler.h">
+      <Filter>NetworkDebug</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui_memory_editor.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

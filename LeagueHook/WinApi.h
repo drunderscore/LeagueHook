@@ -5,7 +5,6 @@
 #include <iostream>
 #include <algorithm>
 
-#define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 
 #include <windows.h>
@@ -24,84 +23,84 @@
 class WinApi
 {
 public:
-	typedef struct _LDR_MODULE
-	{
-		LIST_ENTRY InLoadOrderModuleList;
-		LIST_ENTRY InMemoryOrderModuleList;
-		LIST_ENTRY InInitializationOrderModuleList;
-		PVOID BaseAddress;
-		PVOID EntryPoint;
-		ULONG SizeOfImage;
-		UNICODE_STRING FullDllName;
-		UNICODE_STRING BaseDllName;
-		ULONG Flags;
-		SHORT LoadCount;
-		SHORT TlsIndex;
-		LIST_ENTRY HashTableEntry;
-		ULONG TimeDateStamp;
-	} LDR_MODULE, *PLDR_MODULE;
+    typedef struct _LDR_MODULE
+    {
+        LIST_ENTRY InLoadOrderModuleList;
+        LIST_ENTRY InMemoryOrderModuleList;
+        LIST_ENTRY InInitializationOrderModuleList;
+        PVOID BaseAddress;
+        PVOID EntryPoint;
+        ULONG SizeOfImage;
+        UNICODE_STRING FullDllName;
+        UNICODE_STRING BaseDllName;
+        ULONG Flags;
+        SHORT LoadCount;
+        SHORT TlsIndex;
+        LIST_ENTRY HashTableEntry;
+        ULONG TimeDateStamp;
+    } LDR_MODULE, *PLDR_MODULE;
 
-	static auto GetPEB() -> PPEB;
-	static auto GetModuleInfo( fnv::hash module_name_hash ) -> PLDR_MODULE;
-	static auto GetProcAddress( ULONG64 module_base, fnv::hash proc_name_hash ) -> std::uintptr_t;
-	static auto GetProcAddressDynamic( fnv::hash proc_name_hash ) -> std::uintptr_t;
+    static auto GetPEB()->PPEB;
+    static auto GetModuleInfo( fnv::hash module_name_hash )->PLDR_MODULE;
+    static auto GetProcAddress( ULONG64 module_base, fnv::hash proc_name_hash )->std::uintptr_t;
+    static auto GetProcAddressDynamic( fnv::hash proc_name_hash )->std::uintptr_t;
 
-	template < fnv::hash ModuleNameHash >
-	struct ModuleCache
-	{
-	public:
-		static auto get_module() -> PLDR_MODULE
-		{
-			static PLDR_MODULE module_info{};
+    template < fnv::hash ModuleNameHash >
+    struct ModuleCache
+    {
+    public:
+        static auto get_module() -> PLDR_MODULE
+        {
+            static PLDR_MODULE module_info{};
 
-			if ( module_info == nullptr || module_info->BaseAddress == nullptr )
-				module_info = GetModuleInfo( ModuleNameHash );
+            if ( module_info == nullptr || module_info->BaseAddress == nullptr )
+                module_info = GetModuleInfo( ModuleNameHash );
 
-			return module_info;
-		}
-	};
+            return module_info;
+        }
+    };
 
-	template < fnv::hash ProcNameHash, fnv::hash ModuleNameHash >
-	struct ProcAddressCache : ModuleCache< ModuleNameHash >
-	{
-	public:
-		static auto get_proc_address() -> std::uintptr_t
-		{
-			static std::uintptr_t function = 0;
+    template < fnv::hash ProcNameHash, fnv::hash ModuleNameHash >
+    struct ProcAddressCache : ModuleCache< ModuleNameHash >
+    {
+    public:
+        static auto get_proc_address() -> std::uintptr_t
+        {
+            static std::uintptr_t function = 0;
 
-			if ( function == 0 )
-			{
-				auto module_info = ProcAddressCache::get_module();
-				if ( module_info == nullptr || module_info->BaseAddress == nullptr )
-					return function;
+            if ( function == 0 )
+            {
+                auto module_info = ProcAddressCache::get_module();
+                if ( module_info == nullptr || module_info->BaseAddress == nullptr )
+                    return function;
 
-				function = GetProcAddress( ( ULONG64 )module_info->BaseAddress, ProcNameHash );
-			}
+                function = GetProcAddress( ( ULONG64 )module_info->BaseAddress, ProcNameHash );
+            }
 
-			return function;
-		}
-	};
+            return function;
+        }
+    };
 
-	template < fnv::hash ProcNameHash >
-	struct ProcAddressCache< ProcNameHash, 0 >
-	{
-		static auto get_proc_address() -> std::uintptr_t
-		{
-			static std::uintptr_t function = 0;
+    template < fnv::hash ProcNameHash >
+    struct ProcAddressCache< ProcNameHash, 0 >
+    {
+        static auto get_proc_address() -> std::uintptr_t
+        {
+            static std::uintptr_t function = 0;
 
-			if ( function == 0 )
-				function = GetProcAddressDynamic( ProcNameHash );
+            if ( function == 0 )
+                function = GetProcAddressDynamic( ProcNameHash );
 
-			return function;
-		}
-	};
+            return function;
+        }
+    };
 
-	template < typename DeclType, fnv::hash ProcNameHash, fnv::hash ModuleNameHash >
-	static auto GetProcAddressLazy() -> DeclType
-	{
-		return reinterpret_cast< DeclType >( ProcAddressCache< ProcNameHash, ModuleNameHash >::get_proc_address() );
-	}
+    template < typename DeclType, fnv::hash ProcNameHash, fnv::hash ModuleNameHash >
+    static auto GetProcAddressLazy() -> DeclType
+    {
+        return reinterpret_cast<DeclType>( ProcAddressCache< ProcNameHash, ModuleNameHash >::get_proc_address() );
+    }
 
 private:
-	static PPEB _peb;
+    static PPEB _peb;
 };
