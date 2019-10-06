@@ -21,7 +21,8 @@ static auto WINAPI OnAttach() -> void
     Globals::Input->RegisterHotkey( VK_DELETE, []() { Globals::ShowMenu = !Globals::ShowMenu; } );
 
     Hooks::Init();
-    NetworkDebug::Init();
+    DebugOverlay::Init();
+    NetworkDebug::Init(); // should be on another thread...
 
     Globals::Log->LogInfo( "finished initializing!" );
 }
@@ -30,7 +31,8 @@ static auto WINAPI OnDetach() -> void
 {
     delete Globals::Log;
     delete Globals::Input;
-    delete Globals::Debug;
+    delete Globals::NetDebug;
+    delete Globals::Overlay;
 }
 
 auto WINAPI DllMain( HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved ) -> BOOL
@@ -46,8 +48,8 @@ auto WINAPI DllMain( HINSTANCE hinstDll, DWORD dwReason, LPVOID lpReserved ) -> 
             if ( !lpReserved )
             {
                 Hooks::Restore();
-                if ( Globals::Debug != nullptr )
-                    Globals::Debug->Close();
+                if ( Globals::NetDebug != nullptr )
+                    Globals::NetDebug->Close();
             }
             OnDetach();
             break;

@@ -9,6 +9,7 @@ enum NetworkCmd : int
     kAck, // acknowledgment, sent when client connects
     kPrintLog,
     kDrawCircle,
+    kDrawLine,
     kUnk = -1
 };
 

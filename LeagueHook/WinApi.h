@@ -5,8 +5,6 @@
 #include <iostream>
 #include <algorithm>
 
-#define NOMINMAX
-
 #include <windows.h>
 #include <winternl.h>
 #include <intrin.h>

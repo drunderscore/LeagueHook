@@ -74,5 +74,5 @@ void NetworkDebug::Init()
 {
     Globals::Log->LogInfo( "Preparing to init general NetworkDebug" );
     InitializeHandlers();
-    Globals::Debug = new NetworkDebug( "127.0.0.1", 37645 );
+    Globals::NetDebug = new NetworkDebug( "127.0.0.1", 37645 );
 }

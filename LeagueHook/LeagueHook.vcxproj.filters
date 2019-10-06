@@ -198,5 +198,8 @@
     <ClInclude Include="imgui_memory_editor.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="DebugOverlay.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

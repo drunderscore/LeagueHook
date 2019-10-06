@@ -104,8 +104,11 @@ HRESULT STDMETHODCALLTYPE Present( IDirect3DDevice9 *thisptr, const RECT *src, c
     }
     else if ( init && thisptr )
     {
+        auto delta = curTime - lastTime;
         ImGui_ImplDX9_NewFrame();
-        DrawImGui( curTime - lastTime );
+        DrawImGui( delta );
+        if ( Globals::Overlay )
+            Globals::Overlay->Draw( delta );
 
         ImGui::PopStyleColor();
         ImGui::Render();

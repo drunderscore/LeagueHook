@@ -124,7 +124,7 @@ auto Logger::LogDebug( const char *format, ... ) -> void
 
     va_start( args, format );
 
-    Log( LogLevel::Debug, format, args );
+    Log( LogLevel::NetDebug, format, args );
 
     va_end( args );
 #endif
@@ -166,7 +166,7 @@ auto Logger::Log( LogLevel loglevel, const char *format, va_list args ) -> void
         case LogLevel::Warning:
             LI( SetConsoleTextAttribute )( _console_out, FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_INTENSITY );
             break;
-        case LogLevel::Debug:
+        case LogLevel::NetDebug:
             LI( SetConsoleTextAttribute )( _console_out, FOREGROUND_RED | FOREGROUND_GREEN );
             break;
         default:
